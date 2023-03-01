@@ -1,0 +1,13 @@
+% Precept Rules
+
+#include "AgentPosition.gr".
+#include "WumpusWorldConfiguration.gr".
+
+cell(X,Y) :- X > 0, Y > 0, X <= 4, Y <= 4.
+0 { nothing(X,Y) : wumpus(X,Y) ; pit(X,Y) ; gold(X,Y) ; agent(X,Y) } 1 :- cell(X,Y).
+
+action(left).
+action(right).
+action(up).
+action(down).
+action(grab).
