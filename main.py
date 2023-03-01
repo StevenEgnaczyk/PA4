@@ -11,7 +11,8 @@ def readASP(filename):
     with ctl.solve(yield_=True) as hnd:
         for m in hnd:
             for term in m.symbols(shown=True):
-                returnDict[term.name] = []
+                if not returnDict.keys().__contains__(term.name):
+                    returnDict[term.name] = []
                 argList = []
                 for a in term.arguments:
                     if a.type == SymbolType.String:
@@ -20,7 +21,7 @@ def readASP(filename):
                         argList.append(a.number)
                     if a.type == SymbolType.Function:
                         argList.append(a.name)
-            returnDict[term.name] = argList
+                returnDict[term.name].append(argList)
 
     return returnDict
 
@@ -43,25 +44,61 @@ def printWorld(dict):
                 twoDimArr[pair[0]][pair[1]] = toReplace
     
     print(np.matrix(twoDimArr))
+def generatePrecepts(agentInfo, worldInfo):
+
+    precepts = {}
+
+    xPos = agentInfo['agent'][0][0]
+    yPos = agentInfo['agent'][0][1]
+
+    playerLocation = agentInfo['agent'][0]
+    wumpusStenches = []
+    pitBreezes = []
+    playerAdjacencies = [(xPos + 1, yPos), (xPos - 1, yPos), (xPos, yPos + 1), (xPos, yPos - 1)]
+
+    for key, value in worldInfo.items():
+        if key == "wumpus":
+            for coordinate in value:
+                wumpusStenches.append((coordinate[0]+1, coordinate[1]))
+                wumpusStenches.append((coordinate[0]-1, coordinate[1]))
+                wumpusStenches.append((coordinate[0], coordinate[1]+1))
+                wumpusStenches.append((coordinate[0], coordinate[1]-1))
+        if key == "pit":
+            for coordinate in value:
+                pitBreezes.append((coordinate[0]+1, coordinate[1]))
+                pitBreezes.append((coordinate[0]-1, coordinate[1]))
+                pitBreezes.append((coordinate[0], coordinate[1]+1))
+                pitBreezes.append((coordinate[0], coordinate[1]-1))
+
+    stench = set(playerAdjacencies).intersection(wumpusStenches)
+    breeze = set(playerAdjacencies).intersection(pitBreezes)
+    print(stench)
+    print(breeze)
 
 
 class KBAgent:
 
     @staticmethod
     def recieveAndSavePrecepts():
+        agentInfo = readASP('AgentPosition.gr')
+        xPos = agentInfo['agent'][0][0]
+        yPos = agentInfo['agent'][0][1]
 
-        info = readASP('AgentPosition.gr')
-        print(info)
-        xPos = info['agent'][0]
-        yPos = info['agent'][1]
+        startingXPos = xPos
 
+<<<<<<< HEAD
         world = readASP('WumpusWorldConfiguration.gr')
         printWorld(world)
         xPos += 1
+=======
+        if startingXPos != xPos:
+            f = open("AgentPosition.gr", "a")
+            f.write("\nagent(" + str(xPos) + "," + str(yPos) + ").")
+            f.close()
+>>>>>>> refs/remotes/origin/master
 
-        f = open("AgentPosition.gr", "a")
-        f.write("\nagent(" + str(xPos) + "," + str(yPos) + ").")
-        f.close()
+        worldInfo = readASP('WumpusWorldConfiguration.gr')
+        generatePrecepts(agentInfo, worldInfo)
 
     @staticmethod
     def decideOnNextAction():
@@ -72,7 +109,5 @@ if __name__ == "__main__":
 
     WumpusAgent = KBAgent
     while True:
-
         WumpusAgent.recieveAndSavePrecepts()
         WumpusAgent.decideOnNextAction()
-
