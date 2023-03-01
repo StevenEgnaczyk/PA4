@@ -44,10 +44,11 @@ def printWorld(dict,agent):
                 twoDimArr[pair[0]-1][pair[1]-1] = toReplace
     xPos = agent['agent'][0][0]
     yPos = agent['agent'][0][1]
-    twoDimArr[xPos][yPos] = "A"
+    twoDimArr[xPos-1][yPos-1] = "A"
 
     
-    print(np.flipud(np.matrix(twoDimArr)))
+    print(np.fliplr(np.rot90(np.flipud(np.matrix(twoDimArr)))))
+
 
 
 def generatePrecepts(agentInfo, worldInfo):
