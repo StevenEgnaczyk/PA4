@@ -1,5 +1,6 @@
 from clingo import Control
 from clingo import SymbolType
+import numpy as np
 
 
 def readASP(filename):
@@ -23,6 +24,26 @@ def readASP(filename):
                 returnDict[term.name].append(argList)
 
     return returnDict
+
+def printWorld(dict):
+    twoDimArr = [[" "," "," "," "],[" "," "," "," "],[" "," "," "," "],[" "," "," "," "]]
+    for i in dict.keys():
+        coords = dict[i]
+        if len(coords) > 0:
+            if i == "wumpus":
+                toReplace = "w"
+            elif i == "pit":
+                toReplace = "p"
+            elif i == "gold":
+                toReplace = "g"
+
+            for pair in coords:
+                if isinstance(pair, int):
+                    twoDimArr[coords[0]-1][coords[1]-1] = toReplace
+                    break
+                twoDimArr[pair[0]-1][pair[1]-1] = toReplace
+    
+    print(np.matrix(twoDimArr))
 
 def generatePrecepts(agentInfo, worldInfo):
 
@@ -67,6 +88,9 @@ class KBAgent:
 
         startingXPos = xPos
 
+        world = readASP('WumpusWorldConfiguration.gr')
+        printWorld(world)
+        xPos += 1
         if startingXPos != xPos:
             f = open("AgentPosition.gr", "a")
             f.write("\nagent(" + str(xPos) + "," + str(yPos) + ").")
