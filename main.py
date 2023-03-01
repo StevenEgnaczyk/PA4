@@ -1,5 +1,6 @@
 from clingo import Control
 from clingo import SymbolType
+import numpy as np
 
 
 def readASP(filename):
@@ -23,6 +24,26 @@ def readASP(filename):
 
     return returnDict
 
+def printWorld(dict):
+    twoDimArr = [[" "," "," "," "],[" "," "," "," "],[" "," "," "," "]]
+    for i in dict.keys():
+        coords = dict[i]
+        if len(coords) > 0:
+            if i == "wumpus":
+                toReplace = "w"
+            elif i == "pit":
+                toReplace = "p"
+            elif i == "gold":
+                toReplace = "g"
+
+            for pair in coords:
+                if isinstance(pair, int):
+                    twoDimArr[coords[0]][coords[1]] = toReplace
+                    break
+                twoDimArr[pair[0]][pair[1]] = toReplace
+    
+    print(np.matrix(twoDimArr))
+
 
 class KBAgent:
 
@@ -35,7 +56,7 @@ class KBAgent:
         yPos = info['agent'][1]
 
         world = readASP('WumpusWorldConfiguration.gr')
-        print(world)
+        printWorld(world)
         xPos += 1
 
         f = open("AgentPosition.gr", "a")
