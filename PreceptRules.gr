@@ -1,0 +1,3 @@
+% Precept Rules
+#include AgentPosition.gr.
+#include WumpusWorldConfiguration.gr.

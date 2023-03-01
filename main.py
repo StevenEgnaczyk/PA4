@@ -97,8 +97,8 @@ class KBAgent:
         world = readASP('WumpusWorldConfiguration.gr')
         printWorld(world,agentInfo)
 
-        if startingXPos != xPos:
-            f = open("AgentPosition.gr", "a")
+        with open('AgentPosition.gr', 'w') as f:
+            f.write("% AgentPosition Configuration ")
             f.write("\nagent(" + str(xPos) + "," + str(yPos) + ").")
             f.close()
 

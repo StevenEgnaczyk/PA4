@@ -1,3 +1,2 @@
-% AgentPosition Configuration
-
-agent(1,1).
+% AgentPosition Configuration 
+agent(4,1).
