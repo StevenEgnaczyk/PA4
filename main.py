@@ -31,6 +31,9 @@ class KBAgent:
         xPos = info['agent'][0]
         yPos = info['agent'][1]
 
+        world = readASP('WumpusWorldConfiguration.gr')
+        print(world)
+
 
     @staticmethod
     def decideOnNextAction():
