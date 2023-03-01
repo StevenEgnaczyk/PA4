@@ -31,6 +31,12 @@ class KBAgent:
         xPos = info['agent'][0]
         yPos = info['agent'][1]
 
+        xPos += 1
+
+        f = open("AgentPosition.gr", "a")
+        f.write("\nagent(" + str(xPos) + "," + str(yPos) + ").")
+        f.close()
+
 
     @staticmethod
     def decideOnNextAction():
