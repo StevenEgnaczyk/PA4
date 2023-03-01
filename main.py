@@ -25,7 +25,7 @@ def readASP(filename):
 
     return returnDict
 
-def printWorld(dict):
+def printWorld(dict,agent):
     twoDimArr = [[" "," "," "," "],[" "," "," "," "],[" "," "," "," "],[" "," "," "," "]]
     for i in dict.keys():
         coords = dict[i]
@@ -42,8 +42,13 @@ def printWorld(dict):
                     twoDimArr[coords[0]-1][coords[1]-1] = toReplace
                     break
                 twoDimArr[pair[0]-1][pair[1]-1] = toReplace
+    xPos = agent['agent'][0][0]
+    yPos = agent['agent'][0][1]
+    twoDimArr[xPos][yPos] = "A"
+
     
-    print(np.matrix(twoDimArr))
+    print(np.flipud(np.matrix(twoDimArr)))
+
 
 def generatePrecepts(agentInfo, worldInfo):
 
@@ -89,7 +94,7 @@ class KBAgent:
         startingXPos = xPos
 
         world = readASP('WumpusWorldConfiguration.gr')
-        printWorld(world)
+        printWorld(world,agentInfo)
         xPos += 1
         if startingXPos != xPos:
             f = open("AgentPosition.gr", "a")
