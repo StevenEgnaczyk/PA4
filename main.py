@@ -31,10 +31,9 @@ def generatePrecepts(agentInfo, worldInfo):
     xPos = agentInfo['agent'][0][0]
     yPos = agentInfo['agent'][0][1]
 
-    playerLocation = agentInfo['agent'][0]
+    playerLocation = (xPos, yPos)
     wumpusStenches = []
     pitBreezes = []
-    playerAdjacencies = [(xPos + 1, yPos), (xPos - 1, yPos), (xPos, yPos + 1), (xPos, yPos - 1)]
 
     for key, value in worldInfo.items():
         if key == "wumpus":
@@ -50,8 +49,10 @@ def generatePrecepts(agentInfo, worldInfo):
                 pitBreezes.append((coordinate[0], coordinate[1]+1))
                 pitBreezes.append((coordinate[0], coordinate[1]-1))
 
-    stench = set(playerAdjacencies).intersection(wumpusStenches)
-    breeze = set(playerAdjacencies).intersection(pitBreezes)
+    print(playerLocation)
+    print(wumpusStenches)
+    stench = wumpusStenches.__contains__(playerLocation)
+    breeze = pitBreezes.__contains__(playerLocation)
     print(stench)
     print(breeze)
 
