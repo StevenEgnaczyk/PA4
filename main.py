@@ -26,7 +26,7 @@ def readASP(filename):
     return returnDict
 
 def printWorld(dict):
-    twoDimArr = [[" "," "," "," "],[" "," "," "," "],[" "," "," "," "]]
+    twoDimArr = [[" "," "," "," "],[" "," "," "," "],[" "," "," "," "],[" "," "," "," "]]
     for i in dict.keys():
         coords = dict[i]
         if len(coords) > 0:
@@ -39,11 +39,12 @@ def printWorld(dict):
 
             for pair in coords:
                 if isinstance(pair, int):
-                    twoDimArr[coords[0]][coords[1]] = toReplace
+                    twoDimArr[coords[0]-1][coords[1]-1] = toReplace
                     break
-                twoDimArr[pair[0]][pair[1]] = toReplace
+                twoDimArr[pair[0]-1][pair[1]-1] = toReplace
     
     print(np.matrix(twoDimArr))
+
 def generatePrecepts(agentInfo, worldInfo):
 
     precepts = {}
