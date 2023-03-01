@@ -1,6 +1,7 @@
 from clingo import Control
 from clingo import SymbolType
 
+
 def readASP(filename):
     ctl = Control(["0"])
     ctl.load(filename)
@@ -9,6 +10,7 @@ def readASP(filename):
     with ctl.solve(yield_=True) as hnd:
         for m in hnd:
             for term in m.symbols(shown=True):
+                returnDict[term.name] = []
                 argList = []
                 for a in term.arguments:
                     if a.type == SymbolType.String:
@@ -17,9 +19,10 @@ def readASP(filename):
                         argList.append(a.number)
                     if a.type == SymbolType.Function:
                         argList.append(a.name)
-                returnDict[term.name] = argList
+            returnDict[term.name] = argList
 
     return returnDict
+
 
 class KBAgent:
 
