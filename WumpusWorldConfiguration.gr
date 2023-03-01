@@ -1,5 +1,4 @@
 % World Configuration
-
 wumpus(1,3).
 pit(3,3).
 pit(3,1).

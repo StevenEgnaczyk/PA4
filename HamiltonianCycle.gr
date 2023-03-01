@@ -1,0 +1,24 @@
+%% This is the problem for programming assignment
+%% Find Hamiltonian Cycle H in a graph G
+
+
+% possible candidates
+{ in(X,Y) } :- edge(X,Y).
+
+% starting with 1, all verices in H must be reachable from 1
+reachable(X) :- in(1,X), vertex(X).
+reachable(Y) :- reachable(X), in(X,Y), edge(X,Y).
+
+
+% cannot have more than one edge in H starting at X,or ending at Y
+:- 2 {in(X,Y) : edge(X,Y)}, vertex(X).
+:- 2 {in(X,Y) : edge(X,Y)}, vertex(Y).
+% all vertixes must be reachable
+:- not reachable(X), vertex(X).
+
+#show in/2.
+
+
+
+
+
