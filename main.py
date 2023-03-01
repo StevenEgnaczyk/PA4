@@ -91,6 +91,7 @@ class KBAgent:
     @staticmethod
     def recieveAndSavePrecepts():
         info = readASP('PreceptRules.gr')
+        print(info)
         previousInfo = readASP('PreceptHistory.gr')
 
         print(previousInfo)
@@ -100,6 +101,8 @@ class KBAgent:
 if __name__ == "__main__":
 
     WumpusAgent = KBAgent
-    while True:
+    x = True
+    while x:
         WumpusAgent.recieveAndSavePrecepts()
+        x = False
         # WumpusAgent.decideOnNextAction()
