@@ -5,5 +5,4 @@
 
 cell(X,Y) :- X > 0, Y > 0, X <= 4, Y <= 4.
 
-smell(X,Y) :- wumpus((X + 1), Y).
-
+has_stench(X, Y) :- wumpus(X+1, Y; X-1, Y; X, Y+1; X, Y-1), X<=4, X>0, Y<=4, Y>0.
