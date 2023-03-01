@@ -19,7 +19,7 @@ def readASP(filename):
                         argList.append(a.number)
                     if a.type == SymbolType.Function:
                         argList.append(a.name)
-                returnDict[term.name].append(argList)
+            returnDict[term.name] = argList
 
     return returnDict
 
@@ -34,8 +34,7 @@ class KBAgent:
         xPos = info['agent'][0]
         yPos = info['agent'][1]
 
-        worldInfo = readASP('WumpusWorldConfiguration.gr')
-        print(worldInfo)
+        xPos += 1
 
         f = open("AgentPosition.gr", "a")
         f.write("\nagent(" + str(xPos) + "," + str(yPos) + ").")
