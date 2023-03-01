@@ -1,0 +1,50 @@
+
+% 1 DEFINE THE CONSTANTS
+country(belgium;denmark;france;germany;netherlands;luxembourg).
+color(red;green;blue;gray).
+
+%%%%%%%% Try running clingo MapColoring.gr
+%%%%%%%% what is teh output
+%%%%%%%% ASP simply lists all teh models that satisfy our knowledge base
+
+% 2. DEFINE PREDICATES - which country borders which
+arc(france,belgium).  arc(france,luxembourg). arc(france,germany).
+arc(luxembourg,germany). arc(luxembourg,belgium).
+arc(netherlands,belgium).
+arc(germany,belgium). arc(germany,netherlands). arc(germany,denmark).
+
+% 3.  DEFINE rules
+neighbor(X,Y) :- arc(X,Y).
+neighbor(Y,X) :- arc(X,Y).
+
+% 4. DEFINE CONSTRAINT - each country can have only one color
+% This is where we encounter the aggregate operator 
+% Try to understand this rule 
+% X is a country, give me a coloring of this country with one of the colors, 4^6=4096 answers
+1 {coloring(X, C) : color(C)  } 1  :- country(X). 
+% X is a country, C is a color, give me all combinations (6 * 4 = 24) and then pick all subsets of size 1
+% 1 {coloring(X, C) : country(X), color(C)} 1. 
+
+
+% %%%%%%%%%% Now try clingo MapColoring.gr
+% %%%%%%%%%% what is the answer?  It just says 1+ models 
+% %%%%%%%%%% Try clingo 0 MapColoring.gr  (the 0 option forces to list all models)
+% %%%%%%%%%%  ARE WE IN TROUBLE NOW?
+
+% % 5.  Now we describe the constraints
+% % neighnors can't have the same color
+:- coloring(X1, C), coloring(X2, C), neighbor(X1,X2).
+
+% % 6  only display the coloring 
+#show coloring/2.
+
+% % what are we getting now?
+
+% % to reduce the number of solutions we can assign one fo the coutries to a specific color
+coloring(belgium, red).
+
+% % what happened to the set of solutions?
+
+
+
+  
