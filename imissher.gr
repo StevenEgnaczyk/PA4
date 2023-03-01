@@ -1,0 +1,14 @@
+% End Rules
+
+#include "AgentPosition.gr".
+#include "WumpusWorldConfiguration.gr".
+
+glitter(X,Y) :- agent(X,Y), gold(X,Y).
+death(X,Y) :- agent(X,Y), wumpus(X,Y).
+fell(X,Y) :- agent(X,Y), pit(X,Y).
+
+
+
+#show glitter/2.
+#show death/2.
+#show fell/2.

@@ -46,7 +46,6 @@ def printWorld(dict,agent):
     yPos = agent['agent'][0][1]
     twoDimArr[xPos-1][yPos-1] = "A"
 
-    
     print(np.fliplr(np.rot90(np.flipud(np.matrix(twoDimArr)))))
 
 class KBAgent:
