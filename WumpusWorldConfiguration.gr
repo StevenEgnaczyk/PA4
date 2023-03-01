@@ -5,3 +5,10 @@ pit(3,3).
 pit(3,1).
 pit(4,4).
 gold(2,3).
+
+% Perception rules
+stench(X,Y) :- wumpus(X1,Y1), (X=X1-1;X=X1+1), Y=Y1.
+stench(X,Y) :- wumpus(X1,Y1), (Y=Y1-1;Y=Y1+1), X=X1.
+breeze(X,Y) :- pit(X1,Y1), (X=X1-1;X=X1+1), Y=Y1.
+breeze(X,Y) :- pit(X1,Y1), (Y=Y1-1;Y=Y1+1), X=X1.
+glitter(X,Y) :- gold(X,Y).
