@@ -46,13 +46,10 @@ def printWorld(dict,agent):
     yPos = agent['agent'][0][1]
     twoDimArr[xPos][yPos] = "A"
 
-    
     print(np.flipud(np.matrix(twoDimArr)))
 
 
 def generatePrecepts(agentInfo, worldInfo):
-
-    precepts = {}
 
     xPos = agentInfo['agent'][0][0]
     yPos = agentInfo['agent'][0][1]
@@ -60,6 +57,8 @@ def generatePrecepts(agentInfo, worldInfo):
     playerLocation = (xPos, yPos)
     wumpusStenches = []
     pitBreezes = []
+
+    gold = False
 
     for key, value in worldInfo.items():
         if key == "wumpus":
@@ -74,13 +73,15 @@ def generatePrecepts(agentInfo, worldInfo):
                 pitBreezes.append((coordinate[0]-1, coordinate[1]))
                 pitBreezes.append((coordinate[0], coordinate[1]+1))
                 pitBreezes.append((coordinate[0], coordinate[1]-1))
+        if key == "gold":
+            for coordinate in value:
+                if coordinate[0] == playerLocation[0] and coordinate[1] == playerLocation[1]:
+                    gold = True
 
-    print(playerLocation)
-    print(wumpusStenches)
     stench = wumpusStenches.__contains__(playerLocation)
     breeze = pitBreezes.__contains__(playerLocation)
-    print(stench)
-    print(breeze)
+
+    return stench, breeze, gold
 
 
 class KBAgent:
@@ -95,18 +96,25 @@ class KBAgent:
 
         world = readASP('WumpusWorldConfiguration.gr')
         printWorld(world,agentInfo)
-        xPos += 1
+
         if startingXPos != xPos:
             f = open("AgentPosition.gr", "a")
             f.write("\nagent(" + str(xPos) + "," + str(yPos) + ").")
             f.close()
 
         worldInfo = readASP('WumpusWorldConfiguration.gr')
-        generatePrecepts(agentInfo, worldInfo)
+        stench, breeze, gold = generatePrecepts(agentInfo, worldInfo)
 
-    @staticmethod
-    def decideOnNextAction():
-        print("Penis Again")
+        if stench:
+            print("Stench (" + str(xPos) + "," + str(yPos) + ")")
+        if breeze:
+            print("Breeze (" + str(xPos) + "," + str(yPos) + ")")
+        if gold:
+            print("Glitter (" + str(xPos) + "," + str(yPos) + ")")
+
+    # @staticmethod
+    # def decideOnNextAction():
+
 
 
 if __name__ == "__main__":
@@ -114,4 +122,4 @@ if __name__ == "__main__":
     WumpusAgent = KBAgent
     while True:
         WumpusAgent.recieveAndSavePrecepts()
-        WumpusAgent.decideOnNextAction()
+        # WumpusAgent.decideOnNextAction()
