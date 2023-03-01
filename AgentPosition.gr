@@ -1,5 +1,6 @@
 % AgentPosition Configuration
 
+<<<<<<< HEAD
 agent(1,1).
 agent(2,1).
 agent(3,1).
@@ -3447,3 +3448,6 @@ agent(2,1).
 agent(2,1).
 agent(2,1).
 agent(2,1).
+=======
+agent(1,1).
+>>>>>>> 70ad48339fd58c6dd2f71af7ae1eed1b0d63ddfd
