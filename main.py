@@ -24,22 +24,55 @@ def readASP(filename):
 
     return returnDict
 
+def generatePrecepts(agentInfo, worldInfo):
+
+    precepts = {}
+
+    xPos = agentInfo['agent'][0][0]
+    yPos = agentInfo['agent'][0][1]
+
+    playerLocation = agentInfo['agent'][0]
+    wumpusStenches = []
+    pitBreezes = []
+    playerAdjacencies = [(xPos + 1, yPos), (xPos - 1, yPos), (xPos, yPos + 1), (xPos, yPos - 1)]
+
+    for key, value in worldInfo.items():
+        if key == "wumpus":
+            for coordinate in value:
+                wumpusStenches.append((coordinate[0]+1, coordinate[1]))
+                wumpusStenches.append((coordinate[0]-1, coordinate[1]))
+                wumpusStenches.append((coordinate[0], coordinate[1]+1))
+                wumpusStenches.append((coordinate[0], coordinate[1]-1))
+        if key == "pit":
+            for coordinate in value:
+                pitBreezes.append((coordinate[0]+1, coordinate[1]))
+                pitBreezes.append((coordinate[0]-1, coordinate[1]))
+                pitBreezes.append((coordinate[0], coordinate[1]+1))
+                pitBreezes.append((coordinate[0], coordinate[1]-1))
+
+    stench = set(playerAdjacencies).intersection(wumpusStenches)
+    breeze = set(playerAdjacencies).intersection(pitBreezes)
+    print(stench)
+    print(breeze)
+
 
 class KBAgent:
 
     @staticmethod
     def recieveAndSavePrecepts():
-        info = readASP('WumpusWorldConfiguration.gr')
-        print(info)
-        xPos = info['agent'][0]
-        yPos = info['agent'][1]
+        agentInfo = readASP('AgentPosition.gr')
+        xPos = agentInfo['agent'][0][0]
+        yPos = agentInfo['agent'][0][1]
 
-        # startingXPos = xPos
+        startingXPos = xPos
 
-        # if startingXPos != xPos:
-        # f = open("AgentPosition.gr", "a")
-        # f.write("\nagent(" + str(xPos) + "," + str(yPos) + ").")
-        # f.close()
+        if startingXPos != xPos:
+            f = open("AgentPosition.gr", "a")
+            f.write("\nagent(" + str(xPos) + "," + str(yPos) + ").")
+            f.close()
+
+        worldInfo = readASP('WumpusWorldConfiguration.gr')
+        generatePrecepts(agentInfo, worldInfo)
 
     @staticmethod
     def decideOnNextAction():
