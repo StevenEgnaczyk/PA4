@@ -86,16 +86,13 @@ class KBAgent:
 
         startingXPos = xPos
 
-<<<<<<< HEAD
         world = readASP('WumpusWorldConfiguration.gr')
         printWorld(world)
         xPos += 1
-=======
         if startingXPos != xPos:
             f = open("AgentPosition.gr", "a")
             f.write("\nagent(" + str(xPos) + "," + str(yPos) + ").")
             f.close()
->>>>>>> refs/remotes/origin/master
 
         worldInfo = readASP('WumpusWorldConfiguration.gr')
         generatePrecepts(agentInfo, worldInfo)
