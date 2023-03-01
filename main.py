@@ -17,7 +17,7 @@ def readASP(filename):
                         argList.append(a.number)
                     if a.type == SymbolType.Function:
                         argList.append(a.name)
-                returnDict[term] = argList
+                returnDict[term.name] = argList
 
     return returnDict
 
@@ -27,8 +27,9 @@ class KBAgent:
     def recieveAndSavePrecepts():
 
         info = readASP('AgentPosition.gr')
-        # xPos = argList[0]
-        # yPos = argList[1]
+        print(info)
+        xPos = info['agent'][0]
+        yPos = info['agent'][1]
 
 
     @staticmethod
