@@ -90,32 +90,10 @@ class KBAgent:
 
     @staticmethod
     def recieveAndSavePrecepts():
-        agentInfo = readASP('AgentPosition.gr')
-        xPos = agentInfo['agent'][0][0]
-        yPos = agentInfo['agent'][0][1]
+        info = readASP('PreceptRules.gr')
+        previousInfo = readASP('PreceptHistory.gr')
 
-        startingXPos = xPos
-
-        world = readASP('WumpusWorldConfiguration.gr')
-        printWorld(world,agentInfo)
-
-        with open('AgentPosition.gr', 'w') as f:
-            f.write("% AgentPosition Configuration ")
-            f.write("\nagent(" + str(xPos) + "," + str(yPos) + ").")
-            f.close()
-
-        worldInfo = readASP('WumpusWorldConfiguration.gr')
-        stench, breeze, gold = generatePrecepts(agentInfo, worldInfo)
-
-        if stench:
-            print("Stench (" + str(xPos) + "," + str(yPos) + ")")
-        if breeze:
-            print("Breeze (" + str(xPos) + "," + str(yPos) + ")")
-        if gold:
-            print("Glitter (" + str(xPos) + "," + str(yPos) + ")")
-
-    # @staticmethod
-    # def decideOnNextAction():
+        print(previousInfo)
 
 
 

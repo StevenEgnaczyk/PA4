@@ -7,8 +7,9 @@ has_stench(X, Y) :- wumpus(X+1, Y; X-1, Y; X, Y+1; X, Y-1), X<=4, X>0, Y<=4, Y>0
 smell(X,Y) :- agent(X,Y), has_stench(X,Y).
 has_wind(X,Y) :- pit(X+1, Y; X-1, Y; X,Y+1;X,Y-1), X<=4, X>0, Y<=4, Y>0.
 breeze(X,Y) :- agent(X,Y), has_wind(X,Y).
+glitter(X,Y) :- agent(X,Y), gold(X,Y).
 
 #show breeze/2.
 #show smell/2.
-#show gold/2.
+#show glitter/2.
 
