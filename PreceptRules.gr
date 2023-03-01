@@ -12,5 +12,4 @@ glitter(X,Y) :- agent(X,Y), gold(X,Y).
 #show breeze/2.
 #show smell/2.
 #show glitter/2.
-#show agent/2.
 
