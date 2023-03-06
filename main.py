@@ -57,9 +57,20 @@ class KBAgent:
     def recieveAndSavePrecepts():
         info = readASP('PreceptRules.gr')
         print(info)
+        for i in info:
+            print("FOR I IN INFOR:\n")
+            print(i)
 
-        info = readASP('AgentPosition.gr')
-        print(info)
+        info2 = readASP('AgentPosition.gr')
+        print(info2)
+
+        #f = open("PreceptHistory.gr", "a")
+        #for i in info:
+        #    f.write("\n"+i+"("+str(info2["agent"][0][0])+","+str(info2["agent"][0][1])+").")
+
+
+        #need to get current precepts and put it in history
+        
 
     @staticmethod
     def decideOnNextAction():
@@ -69,10 +80,14 @@ class KBAgent:
 
         if history.keys().__contains__("history"):
             agentHistory = history["history"]
+            #put current pos into history if not already present in history
             if not agentHistory.__contains__(agentPosition):
                 f = open("PreceptHistory.gr", "a")
                 # f is the File Handler
                 f.write("\nhistory(" + str(agentPosition[0]) + "," + str(agentPosition[1]) + ").")
+                #need to get current precepts and put it in history
+                #for i in info:
+                #    print(i)
                 f.close()
         else:
             f = open("PreceptHistory.gr", "a")
@@ -80,6 +95,7 @@ class KBAgent:
             f.write("\nhistory(" + str(agentPosition[0]) + "," + str(agentPosition[1]) + ").")
             f.close()
 
+        #prints 
         for key,value in info.items():
             if key == "safeMove":
                 for move in value:
@@ -88,6 +104,7 @@ class KBAgent:
                 for move in value:
                     print("Possible Move to " + str(move) + " (RISKY)")
 
+        #chooses move
         if info.keys().__contains__("safeMove"):
             move = info["safeMove"].pop(random.randint(0,len(info["safeMove"]) - 1))
             f = open("AgentPosition.gr", "w")
