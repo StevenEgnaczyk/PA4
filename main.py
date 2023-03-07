@@ -57,19 +57,24 @@ class KBAgent:
     def recieveAndSavePrecepts():
         info = readASP('PreceptRules.gr')
         print(info)
-        for i in info:
-            print("FOR I IN INFOR:\n")
-            print(i)
+        
 
         info2 = readASP('AgentPosition.gr')
         print(info2)
 
-        #f = open("PreceptHistory.gr", "a")
-        #for i in info:
-        #    f.write("\n"+i+"("+str(info2["agent"][0][0])+","+str(info2["agent"][0][1])+").")
+        #if not visited put stuff in history
+        history = readASP('PreceptHistory.gr')
+        if not history.keys().__contains__("history"):
+            agentPosition = info2["agent"][0]
+            f = open("PreceptHistory.gr", "a")
+            # f is the File Handler
+            f.write("\nhistory(" + str(agentPosition[0]) + "," + str(agentPosition[1]) + ").")
+            info2 = readASP('PreceptRules.gr')
+            for i in info2:
+                f.write("\n"+i+"("+str(agentPosition[0])+","+str(agentPosition[1])+").")
+            f.close()
 
 
-        #need to get current precepts and put it in history
         
 
     @staticmethod
@@ -81,10 +86,18 @@ class KBAgent:
         if history.keys().__contains__("history"):
             agentHistory = history["history"]
             #put current pos into history if not already present in history
-            if not agentHistory.__contains__(agentPosition):
-                f = open("PreceptHistory.gr", "a")
-                # f is the File Handler
-                f.write("\nhistory(" + str(agentPosition[0]) + "," + str(agentPosition[1]) + ").")
+            #if not agentHistory.__contains__(agentPosition):
+            f = open("PreceptHistory.gr", "a")
+            # f is the File Handler
+            f.write("\nhistory(" + str(agentPosition[0]) + "," + str(agentPosition[1]) + ").")
+            info2 = readASP('PreceptRules.gr')
+            for i in info2:
+                f.write("\n"+i+"("+str(agentPosition[0])+","+str(agentPosition[1])+").")
+
+                
+
+
+
                 #need to get current precepts and put it in history
                 #for i in info:
                 #    print(i)
@@ -93,11 +106,18 @@ class KBAgent:
             f = open("PreceptHistory.gr", "a")
             # f is the File Handler
             f.write("\nhistory(" + str(agentPosition[0]) + "," + str(agentPosition[1]) + ").")
+            info2 = readASP('PreceptRules.gr')
+            for i in info2:
+                f.write("\n"+i+"("+str(agentPosition[0])+","+str(agentPosition[1])+").")
+
+            info2 = readASP('PreceptRules.gr')
+            for i in info2:
+                f.write("\n"+i+"("+str(agentPosition[0])+","+str(agentPosition[1])+").")            
             f.close()
 
         #prints 
         for key,value in info.items():
-            if key == "safeMove":
+            if key == "safeMove1" or key == "safeMove2":
                 for move in value:
                     print("Possible Move to " + str(move) + " (SAFE)")
             if key == "riskyMove":
@@ -105,8 +125,11 @@ class KBAgent:
                     print("Possible Move to " + str(move) + " (RISKY)")
 
         #chooses move
-        if info.keys().__contains__("safeMove"):
-            move = info["safeMove"].pop(random.randint(0,len(info["safeMove"]) - 1))
+        if info.keys().__contains__("safeMove1") or info.keys().__contains__("safeMove2"):
+            if info.keys().__contains__("safeMove1"):
+                move = info["safeMove1"].pop(random.randint(0,len(info["safeMove1"]) - 1))
+            else:
+                move = info["safeMove2"].pop(random.randint(0,len(info["safeMove2"]) - 1))
             f = open("AgentPosition.gr", "w")
             # f is the File Handler
             f.write("agent(" + str(move[0]) + "," + str(move[1]) + ").")

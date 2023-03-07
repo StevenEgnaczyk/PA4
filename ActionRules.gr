@@ -1,11 +1,15 @@
 % Action Rules
 
-#include "PreceptRules.gr".
 #include "PreceptHistory.gr".
+#include "AgentPosition.gr".
 
 possibleMove(X,Y) :- agent(X+1,Y;X-1,Y;X,Y+1;X,Y-1), X > 0, X <=4, Y > 0, Y <= 4.
-safeMove(X,Y) :- possibleMove(X,Y), not breeze(X+1,Y;X-1,Y;X,Y+1;X,Y-1), not smell(X+1,Y;X-1,Y;X,Y+1;X,Y-1);history(X,Y).
-riskyMove(X,Y) :- possibleMove(X,Y), not safeMove(X,Y).
+safeMove1(X,Y) :- possibleMove(X,Y), emptyCell(X+1,Y;X-1,Y;X,Y+1;X,Y-1).
+safeMove2(X,Y) :- possibleMove(X,Y), history(X,Y).
+riskyMove(X,Y) :- possibleMove(X,Y), not safeMove2(X,Y), not safeMove1(X,Y).
 
-#show safeMove/2.
+noWaySmell(X,Y) :- not 
+
+#show safeMove1/2.
+#show safeMove2/2.
 #show riskyMove/2.
