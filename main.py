@@ -118,6 +118,23 @@ class KBAgent:
             # f is the File Handler
             f.write("agent(" + str(move[0]) + "," + str(move[1]) + ").")
             f.close()
+        
+        end = readASP('imissher.gr')
+
+        if end.keys().__contains__("glitter"):
+            print("FOUND THE GOLD")
+            exit()
+        elif end.keys().__contains__("death"):
+            print("DEAD")
+            exit()
+        elif end.keys().__contains__("fell"):
+            print("FELL")
+            exit()
+            
+        
+
+
+        
 
 
 if __name__ == "__main__":

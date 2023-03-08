@@ -509,3 +509,7 @@ smell(1,2).
 smell(1,2).
 smell(1,2).
 smell(1,2).
+history(2,1).
+history(2,2).
+history(3,3).
+history(2,3).
